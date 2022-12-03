@@ -15,7 +15,6 @@ HISTSIZE=1000000
 HISTFILESIZE=2000000
 
 
-PS1='$(printf %0.3d "${?}") \u@\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") $(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi) '
 unset color_prompt
 case "$TERM" in
     xterm-color)        color_prompt=yes;;
@@ -30,6 +29,8 @@ fi
 if test "${colors}" -ge 8; then
   color_prompt=yes
 fi
+
+PS1='$(printf %0.3d "${?}") \u@\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") $(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi) '
 if [ "$color_prompt" = yes ]; then
   PS1='\[\e[0m\]$(printf %0.3d "${?}") \u\[\e[1;31m\]@\[\e[0m\]\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") \[\e[1;31m\]$(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi)\[\e[0m\] '
   if [ -x /usr/bin/dircolors ]; then
