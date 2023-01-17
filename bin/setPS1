@@ -1,9 +1,7 @@
 unset color_prompt
-case "$TERM" in
-    xterm-color)        color_prompt=yes;;
-    xterm)              color_prompt=yes;;
-    screen)             color_prompt=yes;;
-esac
+if grep -E 'color|xterm|screen' <<< "${TERM}"; then
+  color_prompt=yes
+fi
 
 colors="$(tput colors 2>/dev/null)"
 if ! grep -q '[0-9]' <<< "${colors}"; then
