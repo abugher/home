@@ -31,9 +31,11 @@ function color_code() {
 
 
 function main() {
-  # screen seems not to do italics and thinks modifier code 3 instead means
-  # "invert fg/bg".  Otherwise I would prefer that to underline.
-  ps1_default_color="$(ps1_color_code "${fg[gray]}" "${mod[underline]}")"
+  if grep -q 'screen' <<< "${TERM}"; then
+    ps1_default_color="$(ps1_color_code "${fg[gray]}" "${mod[underline]}")"
+  else
+    ps1_default_color="$(ps1_color_code "${fg[gray]}" "${mod[italics]}")"
+  fi
 
   if test 0 = "${UID}"; then 
     ps1_splash_color="$(ps1_color_code "${fg[red]}" "${mod[invert]}")"
