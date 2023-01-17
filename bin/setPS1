@@ -14,8 +14,6 @@ function color_code() {
 
 
 function main() {
-  color_reset="$(color_code 0)"
-
   # screen seems not to do italics and thinks modifier code 3 instead means
   # "invert fg/bg".  Otherwise I would prefer that to underline.
   ps1_default_color="$(color_code "${fg[gray]}" "${mod[underline]}")"
@@ -26,19 +24,19 @@ function main() {
     ps1_splash_color="$(color_code "${fg[green]}" "${mod[none]}")"
   fi
 
-  ps1_ret="$(color_code "${bg[blue]}")"'$(printf %3d "${?}")'"${color_reset}"
-  ps1_user="${ps1_default_color}\\u${color_reset}"
-  ps1_at="${ps1_splash_color}@${color_reset}"
-  ps1_host="${ps1_default_color}\\h${color_reset}"
-  ps1_colon="${ps1_splash_color}:${color_reset}"
-  ps1_pwd="${ps1_default_color}"'$(sed "s#^${HOME}#~#" <<< "${PWD}")'"${color_reset}"
+  ps1_ret="$(color_code "${bg[blue]}")"'$(printf %3d "${?}")'"${reset}"
+  ps1_user="${ps1_default_color}\\u${reset}"
+  ps1_at="${ps1_splash_color}@${reset}"
+  ps1_host="${ps1_default_color}\\h${reset}"
+  ps1_colon="${ps1_splash_color}:${reset}"
+  ps1_pwd="${ps1_default_color}"'$(sed "s#^${HOME}#~#" <<< "${PWD}")'"${reset}"
   ps1_sigil="${ps1_splash_color}$(
     if test 0 = "${UID}"; then 
       printf '#'
     else 
       printf '$'
     fi
-  )${color_reset}"
+  )${reset}"
 
   printf '%s\n' "${ps1_ret} ${ps1_user}${ps1_at}${ps1_host}${ps1_colon}${ps1_pwd}${ps1_sigil} "
 }
@@ -77,4 +75,11 @@ mod[invisible]=8
 mod[strikethrough]=9
 
 
-main
+reset="$(color_code 0)"
+
+
+if test "${1}" = 'demo'; then
+  demo
+else
+  main
+fi
