@@ -1,0 +1,5 @@
+startup_message off
+msgwait .5
+vbell off
+defscrollback 1000000
+nethack off
