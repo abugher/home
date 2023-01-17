@@ -43,6 +43,11 @@ function color_code() {
 }
 
 
+if ! terminal-has-color; then
+  printf '%s\n' '$(printf %0.3d "${?}") \u@\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") $(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi) '
+  exit
+fi
+
 color_reset="$(color_code 0)"
 
 # screen seems not to do italics and thinks modifier code 3 instead means
@@ -55,22 +60,18 @@ else
   ps1_splash_color="$(color_code 32 0)"
 fi
 
+ps1_ret="$(color_code 44)"'$(printf %3d "${?}")'"${color_reset}"
+ps1_user="${ps1_default_color}\\u${color_reset}"
+ps1_at="${ps1_splash_color}@${color_reset}"
+ps1_host="${ps1_default_color}\\h${color_reset}"
+ps1_colon="${ps1_splash_color}:${color_reset}"
+ps1_pwd="${ps1_default_color}"'$(sed "s#^${HOME}#~#" <<< "${PWD}")'"${color_reset}"
+ps1_sigil="${ps1_splash_color}$(
+  if test 0 = "${UID}"; then 
+    printf '#'
+  else 
+    printf '$'
+  fi
+)${color_reset}"
 
-if terminal-has-color; then
-  ps1_ret="$(color_code 44)"'$(printf %3d "${?}")'"${color_reset}"
-  ps1_user="${ps1_default_color}\\u${color_reset}"
-  ps1_at="${ps1_splash_color}@${color_reset}"
-  ps1_host="${ps1_default_color}\\h${color_reset}"
-  ps1_colon="${ps1_splash_color}:${color_reset}"
-  ps1_pwd="${ps1_default_color}"'$(sed "s#^${HOME}#~#" <<< "${PWD}")'"${color_reset}"
-  ps1_sigil="${ps1_splash_color}$(
-    if test 0 = "${UID}"; then 
-      printf '#'
-    else 
-      printf '$'
-    fi
-  )${color_reset}"
-  printf '%s\n' "${ps1_ret} ${ps1_user}${ps1_at}${ps1_host}${ps1_colon}${ps1_pwd}${ps1_sigil} "
-else
-  printf '%s\n' '$(printf %0.3d "${?}") \u@\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") $(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi) '
-fi
+printf '%s\n' "${ps1_ret} ${ps1_user}${ps1_at}${ps1_host}${ps1_colon}${ps1_pwd}${ps1_sigil} "
