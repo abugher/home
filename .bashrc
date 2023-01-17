@@ -68,28 +68,27 @@ fi
 
 ps1_clear='\[\e[0m\]'
 
-function ps1_color_code() {
+
+function color_code() {
   color="${1}"
   modifier="${2:-0}"
   printf '\\[\\e[%s;%sm\\]' "${modifier}" "${color}"
 }
 
-function ps1_background_code() {
-  color="${1}"
-  printf '\\[\\e[%sm\\]' "${color}"
-}
 
-ps1_default_color="$(ps1_color_code 37 3)"
+# screen seems not to do italics and thinks code 3 means "invert fg/bg".
+#ps1_default_color="$(color_code 37 3)"
+ps1_default_color="$(color_code 37 4)"
 
 if test 0 = "${UID}"; then 
-  ps1_splash_color="$(ps1_color_code 31 7)"
+  ps1_splash_color="$(color_code 31 7)"
 else 
-  ps1_splash_color="$(ps1_color_code 32 0)"
+  ps1_splash_color="$(color_code 32 0)"
 fi
 
 PS1='$(printf %0.3d "${?}") \u@\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") $(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi) '
 if [ "$color_prompt" = yes ]; then
-  ps1_ret="$(ps1_background_code 44)"'$(printf %3d "${?}")'"${ps1_clear}"
+  ps1_ret="$(color_code 44)"'$(printf %3d "${?}")'"${ps1_clear}"
   ps1_user="${ps1_default_color}\\u${ps1_clear}"
   ps1_at="${ps1_splash_color}@${ps1_clear}"
   ps1_host="${ps1_default_color}\\h${ps1_clear}"
