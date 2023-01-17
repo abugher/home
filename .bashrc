@@ -66,7 +66,7 @@ fi
 
 # Setting foreground clears background.  Not vice versa.
 
-ps1_clear='\[\e[0m\]'
+color_reset='\[\e[0m\]'
 
 
 function color_code() {
@@ -88,19 +88,19 @@ fi
 
 PS1='$(printf %0.3d "${?}") \u@\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") $(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi) '
 if [ "$color_prompt" = yes ]; then
-  ps1_ret="$(color_code 44)"'$(printf %3d "${?}")'"${ps1_clear}"
-  ps1_user="${ps1_default_color}\\u${ps1_clear}"
-  ps1_at="${ps1_splash_color}@${ps1_clear}"
-  ps1_host="${ps1_default_color}\\h${ps1_clear}"
-  ps1_colon="${ps1_splash_color}:${ps1_clear}"
-  ps1_pwd="${ps1_default_color}"'$(sed "s#^${HOME}#~#" <<< "${PWD}")'"${ps1_clear}"
+  ps1_ret="$(color_code 44)"'$(printf %3d "${?}")'"${color_reset}"
+  ps1_user="${ps1_default_color}\\u${color_reset}"
+  ps1_at="${ps1_splash_color}@${color_reset}"
+  ps1_host="${ps1_default_color}\\h${color_reset}"
+  ps1_colon="${ps1_splash_color}:${color_reset}"
+  ps1_pwd="${ps1_default_color}"'$(sed "s#^${HOME}#~#" <<< "${PWD}")'"${color_reset}"
   ps1_sigil="${ps1_splash_color}$(
     if test 0 = "${UID}"; then 
       printf '#'
     else 
       printf '$'
     fi
-  )${ps1_clear}"
+  )${color_reset}"
   PS1="${ps1_ret} ${ps1_user}${ps1_at}${ps1_host}${ps1_colon}${ps1_pwd}${ps1_sigil} "
   if [ -x /usr/bin/dircolors ]; then
       test -r ~/.dircolors && eval "$(/usr/bin/dircolors -b ~/.dircolors)" || eval "$(/usr/bin/dircolors -b)"
