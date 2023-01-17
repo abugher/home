@@ -1,18 +1,3 @@
-unset color_prompt
-if grep -E 'color|xterm|screen' <<< "${TERM}"; then
-  color_prompt=yes
-else
-  colors="$(tput colors 2>/dev/null)"
-  if ! grep -q '[0-9]' <<< "${colors}"; then
-    colors=0
-  fi
-  if test "${colors}" -ge 8; then
-    color_prompt=yes
-  fi
-  unset colors
-fi
-
-
 # Colors:
 # 0 = clear formatting?
 # 30 = invisible?
@@ -49,17 +34,31 @@ fi
 # Setting foreground clears background.  Not vice versa.
 
 
+unset color_prompt
+if grep -E 'color|xterm|screen' <<< "${TERM}"; then
+  color_prompt=yes
+else
+  colors="$(tput colors 2>/dev/null)"
+  if ! grep -q '[0-9]' <<< "${colors}"; then
+    colors=0
+  fi
+  if test "${colors}" -ge 8; then
+    color_prompt=yes
+  fi
+fi
+
+
 function color_code() {
   color="${1}"
   modifier="${2:-0}"
   printf '\\[\\e[%s;%sm\\]' "${modifier}" "${color}"
 }
 
+
 color_reset="$(color_code 0)"
 
-
-# screen seems not to do italics and thinks code 3 means "invert fg/bg".
-#ps1_default_color="$(color_code 37 3)"
+# screen seems not to do italics and thinks modifier code 3 instead means
+# "invert fg/bg".  Otherwise I would prefer that to underline.
 ps1_default_color="$(color_code 37 4)"
 
 if test 0 = "${UID}"; then 
@@ -88,4 +87,3 @@ if [ "$color_prompt" = yes ]; then
       test -r ~/.dircolors && eval "$(/usr/bin/dircolors -b ~/.dircolors)" || eval "$(/usr/bin/dircolors -b)"
   fi
 fi
-unset color_prompt
