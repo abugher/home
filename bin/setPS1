@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Colors:
 # 0 = clear formatting?
 # 30 = invisible?
@@ -34,20 +36,6 @@
 # Setting foreground clears background.  Not vice versa.
 
 
-unset color_prompt
-if grep -qE 'color|xterm|screen' <<< "${TERM}"; then
-  color_prompt=yes
-else
-  colors="$(tput colors 2>/dev/null)"
-  if ! grep -q '[0-9]' <<< "${colors}"; then
-    colors=0
-  fi
-  if test "${colors}" -ge 8; then
-    color_prompt=yes
-  fi
-fi
-
-
 function color_code() {
   color="${1}"
   modifier="${2:-0}"
@@ -67,7 +55,8 @@ else
   ps1_splash_color="$(color_code 32 0)"
 fi
 
-if [ "$color_prompt" = yes ]; then
+
+if terminal-has-color; then
   ps1_ret="$(color_code 44)"'$(printf %3d "${?}")'"${color_reset}"
   ps1_user="${ps1_default_color}\\u${color_reset}"
   ps1_at="${ps1_splash_color}@${color_reset}"
@@ -82,9 +71,6 @@ if [ "$color_prompt" = yes ]; then
     fi
   )${color_reset}"
   printf '%s\n' "${ps1_ret} ${ps1_user}${ps1_at}${ps1_host}${ps1_colon}${ps1_pwd}${ps1_sigil} "
-  if [ -x /usr/bin/dircolors ]; then
-      test -r ~/.dircolors && eval "$(/usr/bin/dircolors -b ~/.dircolors)" || eval "$(/usr/bin/dircolors -b)"
-  fi
 else
   printf '%s\n' '$(printf %0.3d "${?}") \u@\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") $(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi) '
 fi

@@ -10,6 +10,13 @@ fi
 
 PS1="$(~/bin/setPS1)"
 
+if terminal-has-color; then
+  if [ -x /usr/bin/dircolors ]; then
+      test -r ~/.dircolors && eval "$(/usr/bin/dircolors -b ~/.dircolors)" || eval "$(/usr/bin/dircolors -b)"
+  fi
+fi
+
+
 shopt -s histappend
 HISTCONTROL=ignoredups
 HISTSIZE=1000000
