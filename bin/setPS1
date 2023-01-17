@@ -35,7 +35,7 @@
 
 
 unset color_prompt
-if grep -E 'color|xterm|screen' <<< "${TERM}"; then
+if grep -qE 'color|xterm|screen' <<< "${TERM}"; then
   color_prompt=yes
 else
   colors="$(tput colors 2>/dev/null)"
