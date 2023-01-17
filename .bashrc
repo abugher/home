@@ -8,7 +8,7 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-. ~/bin/setPS1
+PS1="$(~/bin/setPS1)"
 
 shopt -s histappend
 HISTCONTROL=ignoredups
