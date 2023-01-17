@@ -39,7 +39,7 @@
 function color_code() {
   color="${1}"
   modifier="${2:-0}"
-  printf '\\[\\e[%s;%sm\\]' "${modifier}" "${color}"
+  printf '\\[\\033[%s;%sm\\]' "${modifier}" "${color}"
 }
 
 
