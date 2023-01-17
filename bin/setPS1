@@ -1,39 +1,9 @@
 #!/bin/bash
 
-# Colors:
-# 0 = clear formatting?
-# 30 = invisible?
-# 31 = red
-# 32 = green
-# 33 = amber
-# 34 = blue
-# 35 = magenta
-# 36 = cyan
-# 37 = gray
-
-# Background colors:
-# 40 = black?  invisible?
-# 41 = red
-# 42 = green
-# 43 = amber
-# 44 = blue
-# 45 = magenta
-# 46 = cyan
-# 47 = gray
-
-# Modifiers:
-# 0 = default
-# 1 = bright
-# 2 = dim
-# 3 = italics
-# 4 = underline
-# 5 = blink
-# 6 = blink
-# 7 = invert fg/bg
-# 8 = invisible?
-# 9 = strikethrough
-
-# Setting foreground clears background.  Not vice versa.
+if ! terminal-has-color; then
+  printf '%s\n' '$(printf %0.3d "${?}") \u@\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") $(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi) '
+  exit
+fi
 
 
 function color_code() {
@@ -43,35 +13,68 @@ function color_code() {
 }
 
 
-if ! terminal-has-color; then
-  printf '%s\n' '$(printf %0.3d "${?}") \u@\h:$(sed "s#^${HOME}#~#" <<< "${PWD}") $(if test 0 = "${UID}"; then printf "#"; else printf "$"; fi) '
-  exit
-fi
+function main() {
+  color_reset="$(color_code 0)"
 
-color_reset="$(color_code 0)"
+  # screen seems not to do italics and thinks modifier code 3 instead means
+  # "invert fg/bg".  Otherwise I would prefer that to underline.
+  ps1_default_color="$(color_code "${fg[gray]}" "${mod[underline]}")"
 
-# screen seems not to do italics and thinks modifier code 3 instead means
-# "invert fg/bg".  Otherwise I would prefer that to underline.
-ps1_default_color="$(color_code 37 4)"
-
-if test 0 = "${UID}"; then 
-  ps1_splash_color="$(color_code 31 7)"
-else 
-  ps1_splash_color="$(color_code 32 0)"
-fi
-
-ps1_ret="$(color_code 44)"'$(printf %3d "${?}")'"${color_reset}"
-ps1_user="${ps1_default_color}\\u${color_reset}"
-ps1_at="${ps1_splash_color}@${color_reset}"
-ps1_host="${ps1_default_color}\\h${color_reset}"
-ps1_colon="${ps1_splash_color}:${color_reset}"
-ps1_pwd="${ps1_default_color}"'$(sed "s#^${HOME}#~#" <<< "${PWD}")'"${color_reset}"
-ps1_sigil="${ps1_splash_color}$(
   if test 0 = "${UID}"; then 
-    printf '#'
+    ps1_splash_color="$(color_code "${fg[red]}" "${mod[invert]}")"
   else 
-    printf '$'
+    ps1_splash_color="$(color_code "${fg[green]}" "${mod[none]}")"
   fi
-)${color_reset}"
 
-printf '%s\n' "${ps1_ret} ${ps1_user}${ps1_at}${ps1_host}${ps1_colon}${ps1_pwd}${ps1_sigil} "
+  ps1_ret="$(color_code "${bg[blue]}")"'$(printf %3d "${?}")'"${color_reset}"
+  ps1_user="${ps1_default_color}\\u${color_reset}"
+  ps1_at="${ps1_splash_color}@${color_reset}"
+  ps1_host="${ps1_default_color}\\h${color_reset}"
+  ps1_colon="${ps1_splash_color}:${color_reset}"
+  ps1_pwd="${ps1_default_color}"'$(sed "s#^${HOME}#~#" <<< "${PWD}")'"${color_reset}"
+  ps1_sigil="${ps1_splash_color}$(
+    if test 0 = "${UID}"; then 
+      printf '#'
+    else 
+      printf '$'
+    fi
+  )${color_reset}"
+
+  printf '%s\n' "${ps1_ret} ${ps1_user}${ps1_at}${ps1_host}${ps1_colon}${ps1_pwd}${ps1_sigil} "
+}
+
+
+declare -A fg
+fg[black]=30
+fg[red]=31
+fg[green]=32
+fg[amber]=33
+fg[blue]=34
+fg[magenta]=35
+fg[cyan]=36
+fg[gray]=37
+
+declare -A bg
+bg[black]=40
+bg[red]=41
+bg[green]=42
+bg[amber]=43
+bg[blue]=44
+bg[magenta]=45
+bg[cyan]=46
+bg[gray]=47
+
+declare -A mod
+mod[none]=0
+mod[bright]=1
+mod[dim]=2
+mod[italics]=3
+mod[underline]=4
+mod[blink]=5
+mod[blink]=6
+mod[invert]=7
+mod[invisible]=8
+mod[strikethrough]=9
+
+
+main
