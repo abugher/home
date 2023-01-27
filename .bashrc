@@ -1,7 +1,19 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 
-PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/games:/usr/games
+NEWPATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/games:/usr/games
+OLDPATH="$(
+  for p in $(
+    sed 's/:/\n/g' <<< "${PATH}"
+  ); do 
+    if ! grep -q "^${p}\$" <<< "$(
+      sed 's/:/\n/g' <<< "${NEWPATH}"
+    )"; then 
+      echo -n ":${p}"
+    fi; 
+  done
+)"
+PATH="${NEWPATH}${OLDPATH}"
 
 
 if [ -f ~/.bash_aliases ]; then
