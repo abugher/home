@@ -1,5 +1,6 @@
 text/plain; cat %s; copiousoutput; needsterminal
-text/html; html2text %s; copiousoutput; needsterminal
+# mutt replaces %{charset} based on the variable within the Content-Type header.
+text/html; iconv -f '%{charset}' -t "${LANG#*.}" '%s' | html2text; copiousoutput; needsterminal
 audio/*; mpv %s; needsterminal
 video/*; mpv --volume 0 --osd-level 3 %s; needsterminal
 image/*; feh %s; needsterminal
