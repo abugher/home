@@ -4,3 +4,7 @@ if
 then
   . "$HOME/.bashrc"
 fi
+
+if ! test 'set' = "${SSH_AUTH_SOCK:+set}"; then
+  eval "$(ssh-agent)"
+fi
