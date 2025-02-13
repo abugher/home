@@ -5,7 +5,7 @@ else
   alias l="ls -N -1tr"
 fi
 alias grep='grep --color=auto'
-alias dp='dw 5 | pass add -m'
+alias dp='{ echo -n "1!"; dw 5; } | pass add -m'
 alias dmesg='sudo dmesg'
 alias startx='exec /usr/bin/startx'
 alias i='mplayer -cache 5000 -cache-min 20 -osdlevel 3 -fs'
