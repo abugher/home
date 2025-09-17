@@ -11,4 +11,7 @@ alias startx='exec /usr/bin/startx'
 alias i='mplayer -cache 5000 -cache-min 20 -osdlevel 3 -fs'
 alias pianobar='timeout 9h pianobar'
 alias tdome='(cd ~/.tintin/; tt++ config/tdome.tt)'
+alias tdome-builder='(cd ~/.tintin/; tt++ config/builder.tt)'
 alias supertuxkart='inhibit supertuxkart'
+# startw -- Start wayland.  Well, start a wayland compositor.
+alias startw='exec dbus-launch ssh-agent sway'

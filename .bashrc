@@ -15,22 +15,26 @@ OLDPATH="$(
 )"
 PATH="${NEWPATH}${OLDPATH}"
 
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
 
 PS1="$(~/bin/setPS1)"
 
 if terminal-has-color; then
   if [ -x /usr/bin/dircolors ]; then
-      test -r ~/.dircolors && eval "$(/usr/bin/dircolors -b ~/.dircolors)" || eval "$(/usr/bin/dircolors -b)"
+    test -r ~/.dircolors && eval "$(/usr/bin/dircolors -b ~/.dircolors)" || eval "$(/usr/bin/dircolors -b)"
   fi
 fi
+
 
 shopt -s histappend
 HISTCONTROL=ignoredups
 HISTSIZE=1000000
 HISTFILESIZE=2000000
+
 
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -40,5 +44,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
 set -o vi
 
+
+if ! test 'set' = "${SSH_AUTH_SOCK:+set}"; then
+  eval "$(ssh-agent)" > /dev/null
+fi
+
+
+export GPG_TTY="$(tty)"
+export PYTHONDONTWRITEBYTECODE=please
