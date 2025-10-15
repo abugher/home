@@ -1,0 +1,3 @@
+. /usr/share/bash-completion/completions/pass
+
+complete -o filenames -F _pass passclip

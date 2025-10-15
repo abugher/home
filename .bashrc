@@ -1,5 +1,10 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
+# See other .bash* for aliases and such.
+
+# Per user tab completion specifications are under:  
+#   ~/.local/share/bash-completion/completions/
+
 
 NEWPATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/games:/usr/games
 OLDPATH="$(
