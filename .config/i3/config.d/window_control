@@ -1,0 +1,49 @@
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# Default keys are almost-but-not-quite vi keys - the worst possible
+# configuration for anyone, whether or not they know vi.  Use vi keys instead.
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+semicolon split h
+
+# split in vertical orientation
+bindsym $mod+Shift+semicolon split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# Container Layout
+bindsym $mod+Shift+t layout tabbed
+# 's' is already for "Steam", "Screenshot", and "Suspend".
+#
+# Use 'w' for "Windowed mode", even though it is technically "split mode".
+#
+# splith seems more natural than splitv when breaking out of tabbed mode.
+bindsym $mod+Shift+w layout splith
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child

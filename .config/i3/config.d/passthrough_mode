@@ -1,0 +1,5 @@
+# passthrough - Focused window gets almost all keystrokes directly.
+mode "passthrough mode (alt+shift+X)" {
+  bindsym $mod+Shift+x mode "default"
+}
+bindsym $mod+Shift+x mode "passthrough mode (alt+shift+X)"

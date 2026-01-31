@@ -1,0 +1,32 @@
+# command line
+bindsym $mod+d                          exec dmenu_run
+#bindsym $mod+Return                     exec i3-sensible-terminal
+#bindsym $mod+Return                     exec xterm -fg honeydew -bg black -fn 10x20
+bindsym $mod+Return                     exec lxterminal
+bindsym $mod+n                          exec xrdb -merge ~/.Xresources && xterm -fg honeydew -bg black
+
+# browsers
+#
+# ~/.config/gtk-3.0/settings.ini controls theme for firefox.  GTK_THEME variable can override.
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1954791
+# FF seems to misapply theme colors to links.  Until fixed, specify a theme
+# with legible link colors.
+#bindsym $mod+i                          exec firefox
+bindsym $mod+i                          exec GTK_THEME=Blackbird firefox
+bindsym $mod+c                          exec chromium
+
+# communication
+bindsym $mod+Shift+p                    exec pidgin
+
+# games
+bindsym $mod+Shift+s                    exec steam
+bindsym $mod+z                          exec ~/bin/inhibit zsnes
+bindsym $mod+Shift+i                    exec ~/bin/insaniquarium
+
+# system control
+bindsym $mod+p                          exec pavucontrol
+bindsym $mod+s                          exec ~/bin/screenshot
+
+# click counter (not mouse clicks)
+bindsym $mod+comma                      exec ~/code/clicks/click
+bindsym $mod+Shift+comma                exec ~/code/clicks/showgraphclicks

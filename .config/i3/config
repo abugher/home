@@ -1,0 +1,11 @@
+# file:///usr/share/doc/i3-wm/userguide.html
+
+# Variables defined in included files are scoped only for that file and any
+# files it includes but not the parent or sibling files.
+
+# Mod1 == "Alt" key
+set $mod Mod1
+# Default font:  pango:monospace 8
+set $font pango:DejaVu Sans Mono 8
+
+include config.d/*

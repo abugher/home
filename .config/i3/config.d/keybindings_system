@@ -1,0 +1,21 @@
+# Adjust output to current set of monitors.
+bindsym $mod+m                          exec ~/bin/monitors
+
+# Brightness keys, eg "Fn" keys, send these signals - when they work.
+bindsym XF86MonBrightnessUp             exec ~/bin/brightness up
+bindsym XF86MonBrightnessDown           exec ~/bin/brightness down
+
+# Those brightness keys are usually in stupid places, anyway.  Use alt+up and
+# alt+down instead.
+bindsym $mod+Up                         exec ~/bin/brightness up
+bindsym $mod+Down                       exec ~/bin/brightness down
+
+# Make screen dark.  'o' for "Off".
+bindsym --release $mod+o                exec ~/bin/darken
+
+# Lock screen.
+#bindsym $mod+Control+l                  exec xscreensaver-command -lock
+bindsym $mod+Control+l                  exec ~/bin/lock
+
+# Suspend to disk.
+bindsym --release Control+$mod+s        exec ~/bin/suspend disk
