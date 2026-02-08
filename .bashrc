@@ -58,5 +58,6 @@ if ! test 'set' = "${SSH_AUTH_SOCK:+set}"; then
 fi
 
 
-export GPG_TTY="$(tty)"
 export PYTHONDONTWRITEBYTECODE=please
+export GPG_TTY="$(tty)"
+export PINENTRY_USER_DATA="DISPLAY='${DISPLAY}';TERM='${TERM}';GPG_TTY='${GPG_TTY}';"
