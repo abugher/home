@@ -5,8 +5,11 @@ external_names=(
 )
 
 # Rate has no effect unless resolution is also set.
+
 external_outputs['second']='HDMI-2'
 external_resolutions['second']='2560x1440'
+# Default rate is 59.95, but has tearing and stutter.  75 looks better.  (No
+# clue why it isn't default.)
 external_rates['second']='75'
 external_primary['second']='OK'
 
