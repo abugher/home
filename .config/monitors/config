@@ -1,0 +1,25 @@
+# Outputs will be configured in this order.  If all are requested as primary,
+# the last successfully configured will become primary.
+external_names=(
+  'second'
+  'first'
+)
+
+# Parameters for 'second':
+external_outputs['second']='HDMI-2'
+external_resolutions['second']='2560x1440'
+external_rates['second']='75'
+external_primary['second']='OK'
+
+# Parameters for 'first':
+external_outputs['first']='HDMI-1'
+external_resolutions['first']='2560x1440'
+external_rates['first']='75'
+external_primary['first']='probably'
+
+# Parameters for internal display, if any:
+#internal_output='LVDS-1'
+#internal_resolution='1024x768'
+#internal_rate='30'
+#internal_with_external='sure, why not'
+#internal_primary='yeah'
