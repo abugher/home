@@ -17,10 +17,12 @@ bindsym $mod+c                          exec chromium
 
 # communication
 bindsym $mod+Shift+p                    exec pidgin
+bindsym $mod+t                          exec thunderbird
 
 # games
 bindsym $mod+Shift+s                    exec steam
 bindsym $mod+z                          exec ~/bin/inhibit zsnes
+bindsym $mod+Shift+n                    exec ~/bin/inhibit nestopia
 bindsym $mod+Shift+i                    exec ~/bin/insaniquarium
 
 # system control
