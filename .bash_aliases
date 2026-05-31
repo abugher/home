@@ -6,6 +6,9 @@ else
 fi
 alias grep='grep --color=auto'
 alias dp='{ echo -n "1!"; dw 5; } | pass add -m'
+# sudoers configuration to allow group root to run dmesg without password auth:
+#
+#       %sudo   ALL=(root:root) NOPASSWD: /bin/dmesg "", /bin/dmesg -w, /bin/dmesg -W
 alias dmesg='sudo dmesg'
 alias startx='exec /usr/bin/startx'
 alias i='mplayer -cache 5000 -cache-min 20 -osdlevel 3 -fs'
